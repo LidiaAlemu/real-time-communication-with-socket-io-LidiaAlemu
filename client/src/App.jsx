@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react';
+import Login from './components/Login';
+import ChatRoom from './components/ChatRoom';
+import './App.css';
 
 function App() {
+  const [username, setUsername] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = (user) => {
+    setUsername(user);
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setUsername(null);
+    setIsLoggedIn(false);
+  };
+
   return (
-    <div>
-      <h1>Socket.io Chat Application</h1>
-      <p>React client is running!</p>
+    <div className="App">
+      {!isLoggedIn ? (
+        <Login onLogin={handleLogin} />
+      ) : (
+        <ChatRoom username={username} onLogout={handleLogout} />
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
